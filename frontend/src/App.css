@@ -242,3 +242,32 @@
 .two-col{grid-template-columns:1fr}
 @media(max-width:1000px){.selected-exc-pill,.cycle-pill{display:none}.tab{padding:0 8px}.demo-about summary span{display:block;margin:5px 0 0}}
 @media(max-width:700px){:root{--sidebar-w:175px}.topbar{padding:0 6px}.tab{font-size:11px;padding:0 6px}.topbar-right{display:none}.metrics,.action-grid,.eval-grid{grid-template-columns:1fr 1fr}.dim-name{width:110px}.eval-hero{gap:10px}.panel{padding:12px}.demo-about{margin:10px 12px 0}.cc-row{font-size:10px}}
+
+/* Business summary and decision hierarchy, within the existing Planner layout. */
+.planner-intro{display:flex;justify-content:space-between;align-items:center;margin:0 0 16px;gap:12px}
+.planner-intro h1{font-size:24px;line-height:1.2;letter-spacing:-.03em;margin:0 0 5px}
+.planner-intro p,.detail-heading p{font-size:13px;color:var(--text-2);margin:0}
+.planner-note,.planner-hint{font-size:11.5px;color:var(--text-3);line-height:1.5}
+.planner-table td{font-size:13px;line-height:1.5;white-space:normal}
+.planner-table th:nth-child(1){width:33%}.planner-table th:nth-child(2){width:25%}.planner-table th:nth-child(3){width:10%}.planner-table th:nth-child(4){width:32%}
+.issue-label{display:block;font-size:14px;color:var(--text-1);margin-bottom:3px}
+.planner-table small,.detail-heading small{display:block;color:var(--text-3);font-size:10.5px;margin-top:5px}
+.review-cta{font:600 12px var(--font);color:var(--blue-text);background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:6px;text-align:left;padding:9px 11px;cursor:pointer;line-height:1.4}
+.review-cta:hover{background:#dbeafe}.review-cta:focus-visible{outline:2px solid #2563eb;outline-offset:3px}
+.review-state{display:block;font-size:10.5px;color:var(--text-3);margin-top:5px}
+.planner-detail{scroll-margin-top:16px;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-lg);padding:20px;margin-top:18px}
+.detail-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+.detail-heading h2{font-size:21px;letter-spacing:-.02em;margin:3px 0 6px}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.decision-block{padding:16px;border:1px solid var(--border-soft);border-radius:8px}
+.decision-block h3{font-size:14px;margin:0 0 10px}.decision-block p{font-size:13px;line-height:1.6;margin:8px 0 12px;color:var(--text-2)}
+.decision-block ul{padding-left:18px;margin:0 0 10px}.decision-block li{font-size:13px;line-height:1.55;margin-bottom:7px;color:var(--text-2)}
+.action-focus{background:var(--blue-bg);border-color:#bfdbfe}.action-focus h3{font-size:17px;margin-top:6px;color:var(--blue-text)}
+.approval-focus{background:var(--amber-bg);border-color:var(--amber-border)}
+.technical-detail{border-top:1px solid var(--border-soft);margin-top:18px;padding-top:14px;font-size:12px;line-height:1.6}.technical-detail summary{cursor:pointer;color:var(--text-2);font-weight:600}.technical-detail ul{padding-left:18px}
+.planner-hint{margin:12px 0 0}
+.sidebar .sb-section{padding-top:10px}.sidebar .cycle-card{padding:8px 10px}.sidebar .cc-row{padding:2px 0}
+.demo-disclosure{position:sticky;bottom:0;background:var(--ink-900);flex-shrink:0}
+@media(max-width:850px){.decision-grid{grid-template-columns:1fr}.planner-table{min-width:680px}.planner-intro{align-items:flex-start}.planner-intro>.planner-note{display:none}.planner-detail{padding:14px}}
+.panel .metrics .met-val{font-size:28px;line-height:1.2;margin:6px 0}

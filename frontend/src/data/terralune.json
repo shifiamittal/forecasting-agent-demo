@@ -230,7 +230,7 @@
           },
           {
             "name": "Layer sequence compliance",
-            "val": 1.0,
+            "val": 1,
             "cls": "pass"
           },
           {
@@ -264,6 +264,21 @@
             "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
           }
         ]
+      },
+      "planner": {
+        "issue": "Missing customer data",
+        "happened": "Four days of data missing",
+        "cause": "A changed file format blocked the feed.",
+        "impact": "Forecasts for this group are unreliable until the missing data is restored.",
+        "nextAction": "Review data backfill",
+        "diagnosis": "This is a data problem, not a model problem. Correct the quantity mapping before using the forecast.",
+        "evidence": [
+          "Harborline Fleet: four daily files rejected.",
+          "Data completeness: 46%, below the 75% threshold.",
+          "A similar historical case was resolved by correcting the mapping."
+        ],
+        "recommendation": "Check units, restore the four missing days, then validate totals.",
+        "approval": "A specialist must review the backfill before forecasts are released. Escalate repeated format changes to engineering."
       }
     },
     {
@@ -453,7 +468,7 @@
           },
           {
             "name": "Layer sequence compliance",
-            "val": 1.0,
+            "val": 1,
             "cls": "pass"
           },
           {
@@ -487,6 +502,21 @@
             "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
           }
         ]
+      },
+      "planner": {
+        "issue": "Outdated fleet assumptions",
+        "happened": "Forecasts keep falling below demand",
+        "cause": "Planning assumptions are 10 weeks out of date.",
+        "impact": "Underforecasting may leave plans short of demand.",
+        "nextAction": "Review retraining recommendation",
+        "diagnosis": "The input data is complete. Outdated model assumptions are driving the forecast shortfall.",
+        "evidence": [
+          "Inputs are 97% complete; no rejected files.",
+          "Forecast error rose from 8.6% to 12.7% over three cycles.",
+          "Demand now exceeds the forecast by 15% of actual demand."
+        ],
+        "recommendation": "Refresh the inputs and retrain the model. Consider a temporary +11% adjustment for two cycles.",
+        "approval": "Human approval is required for retraining and the temporary adjustment. Assign an owner and an expiry before any change."
       }
     },
     {
@@ -666,7 +696,7 @@
           },
           {
             "name": "Layer sequence compliance",
-            "val": 1.0,
+            "val": 1,
             "cls": "pass"
           },
           {
@@ -700,6 +730,21 @@
             "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
           }
         ]
+      },
+      "planner": {
+        "issue": "Expected event demand increase",
+        "happened": "Forecast demand rises +19%",
+        "cause": "A scheduled spring event explains the increase.",
+        "impact": "The increase matches past events; a temporary adjustment may be appropriate.",
+        "nextAction": "Review temporary forecast adjustment",
+        "diagnosis": "The event explains the demand change. There is no evidence of a broken data feed.",
+        "evidence": [
+          "Inputs are 98% complete; no feed failures.",
+          "Demand change: +19%, within the historical +12–21% range.",
+          "Event window: 27 April–3 May 2026."
+        ],
+        "recommendation": "Review a +19% adjustment for the event window only, then return to the baseline.",
+        "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending."
       }
     }
   ]

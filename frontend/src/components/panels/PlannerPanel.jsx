@@ -1,162 +1,58 @@
-import AlertBanner from '../shared/AlertBanner'
+import { useRef, useEffect } from 'react'
 import MetricCard from '../shared/MetricCard'
 import Pill from '../shared/Pill'
 import ConfidenceBar from '../shared/ConfidenceBar'
 import ActionItem from '../shared/ActionItem'
 
-function tierPillCls(tierCls) {
-  if (tierCls === 'tier-t1') return 'p-blue'
-  if (tierCls === 'tier-t2') return 'p-amber'
-  return 'p-red'
-}
-
 export default function PlannerPanel({ cycleData, selectedExcId, onSelectExc }) {
-  if (!cycleData) {
-    return (
-      <div className="empty">
-        <div className="empty-icon">▶</div>
-        <div className="empty-title">Waiting for cycle run</div>
-        <div className="empty-sub">Choose a fictional entity to explore the sample cycle.</div>
+  const detailRef = useRef(null)
+  useEffect(() => {
+    if (selectedExcId) detailRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }, [selectedExcId])
+  if (!cycleData?.cycle) return <div className="empty">Choose an entity to review its forecast.</div>
+  const { cycle, exceptions } = cycleData
+  const selected = exceptions.find(e => e.id === selectedExcId)
+  const reviewCount = exceptions.filter(e => e.actions.some(a => a.tier !== 'T1')).length
+  const highCount = exceptions.filter(e => ['HIGH', 'CRITICAL'].includes(e.sev)).length
+  const p = selected?.planner
+
+  return <>
+    <header className="planner-intro">
+      <div><h1>Forecast review</h1><p>{cycle.client_name} · Find what needs attention. Review the next step.</p></div>
+      <span className="planner-note">Prioritized by risk</span>
+    </header>
+    <div className="metrics">
+      <MetricCard label="Issues detected" val={exceptions.length} cls="mv-blue" sub="Across this forecast cycle" />
+      <MetricCard label="High-risk issues" val={highCount} cls="mv-red" sub="Review these first" />
+      <MetricCard label="Need human review" val={reviewCount} cls="mv-amber" sub="Approval or specialist input" />
+      <MetricCard label="Safe to handle autonomously" val={exceptions.length-reviewCount} cls="mv-blue" sub="Entire issues, not individual steps" />
+    </div>
+    <div className="card">
+      <div className="card-head"><h2 className="card-title">What needs attention</h2><span className="planner-note">Select an action to review below</span></div>
+      <div className="exc-wrap"><table className="exc-table planner-table">
+        <thead><tr><th scope="col">What happened</th><th scope="col">Likely cause</th><th scope="col">Risk</th><th scope="col">Next step</th></tr></thead>
+        <tbody>{exceptions.map(e => <tr key={e.id} className={selectedExcId === e.id ? 'selected' : ''} onClick={() => onSelectExc(selectedExcId === e.id ? null : e.id)}>
+          <td><strong className="issue-label">{e.planner.issue}</strong><div>{e.planner.happened}</div><small>{e.sku} · {e.segment}</small></td>
+          <td>{e.planner.cause}</td>
+          <td><Pill cls={e.sevCls}>{e.sev === 'MED' ? 'Medium' : e.sev === 'HIGH' ? 'High' : e.sev}</Pill></td>
+          <td><button className="review-cta" aria-expanded={selectedExcId === e.id} aria-controls="planner-detail" onClick={event => {event.stopPropagation(); onSelectExc(selectedExcId === e.id ? null : e.id)}}>{e.planner.nextAction} <span aria-hidden="true">→</span></button><span className="review-state">Human review required</span></td>
+        </tr>)}</tbody>
+      </table></div>
+    </div>
+    {!selected && <p className="planner-hint">Choose an issue above. Evidence, diagnosis and approval needs are all here in Planner view.</p>}
+    {selected && <section key={selected.id} id="planner-detail" className="planner-detail" ref={detailRef} aria-label="Exception review">
+      <div className="detail-heading"><div><span className="section-label">Issue</span><h2>{p.issue}</h2><p>{p.impact}</p><small>{selected.sku} · {selected.segment}</small></div><Pill cls={selected.sevCls}>{selected.sev === 'HIGH' ? 'High risk' : 'Medium risk'}</Pill></div>
+      <div className="decision-grid">
+        <section className="decision-block"><h3>Evidence</h3><ul>{p.evidence.map(item => <li key={item}>{item}</li>)}</ul><span className="planner-note">Synthetic observations and historical examples</span></section>
+        <section className="decision-block"><h3>Diagnosis</h3><p>{p.diagnosis}</p><ConfidenceBar confidence={selected.rca.confidence} /></section>
+        <section className="decision-block action-focus"><span className="section-label">Recommended action</span><h3>{p.nextAction}</h3><p>{p.recommendation}</p></section>
+        <section className="decision-block approval-focus"><h3>Human approval / escalation</h3><Pill cls="p-amber">Awaiting human review</Pill><p>{p.approval}</p><span className="planner-note">Illustrative status · no action is executed</span></section>
       </div>
-    )
-  }
-
-  const { cycle, exceptions = [] } = cycleData ?? {}
-  const selectedExc = exceptions?.find(e => e.id === selectedExcId) ?? null
-
-  if (!cycle) {
-    return (
-      <div className="empty">
-        <div className="empty-icon">▶</div>
-        <div className="empty-title">Waiting for cycle run</div>
-        <div className="empty-sub">Choose a fictional entity to explore the sample cycle.</div>
-      </div>
-    )
-  }
-
-  return (
-    <>
-      {/* Section 1 — always visible */}
-      <AlertBanner
-        level={cycle.alert?.level}
-        icon={cycle.alert?.icon}
-        title={cycle.alert?.title}
-        desc={cycle.alert?.desc}
-      />
-
-      <div className="metrics">
-        {(cycle.metrics ?? []).map((m, i) => (
-          <MetricCard key={i} label={m.label} val={m.val} cls={m.cls} sub={m.sub} subCls={m.subCls} />
-        ))}
-      </div>
-
-      <div className="card">
-        <div className="card-head">
-          <div className="card-title">
-            <div className="card-icon ci-red">⚑</div>
-            Exception queue — cycle {cycle.cycle_id}
-          </div>
-          <Pill cls="p-gray">{exceptions.length} exceptions found</Pill>
-        </div>
-        <div className="exc-wrap">
-          <table className="exc-table">
-            <thead>
-              <tr>
-                <th>SKU</th>
-                <th>Severity</th>
-                <th>Type</th>
-                <th>Agent diagnosis</th>
-                <th>Tier</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {exceptions.map(exc => (
-                <tr
-                  key={exc.id}
-                  className={selectedExcId === exc.id ? 'selected' : ''}
-                  onClick={() => onSelectExc(exc.id === selectedExcId ? null : exc.id)}
-                >
-                  <td>
-                    <div className="sku-name">{exc.sku}</div>
-                    <div className="sku-seg">{exc.segment}</div>
-                  </td>
-                  <td><Pill cls={exc.sevCls}>{exc.sev}</Pill></td>
-                  <td>
-                    <span style={{ fontFamily: 'var(--mono)', fontSize: '11.5px', color: 'var(--text-2)' }}>
-                      {exc.type}
-                    </span>
-                  </td>
-                  <td style={{ fontSize: '12.5px', color: 'var(--text-2)', maxWidth: '280px' }}>
-                    {exc.diagnosis}
-                  </td>
-                  <td><Pill cls={tierPillCls(exc.tierCls)}>{exc.tier}</Pill></td>
-                  <td style={{ color: 'var(--blue-mid)', fontSize: '12px', whiteSpace: 'nowrap' }}>
-                    View full story →
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div style={{ padding: '9px 14px', background: 'var(--surface-2)', borderTop: '1px solid var(--border-soft)', fontSize: '11.5px', color: 'var(--text-3)' }}>
-          ↑ Click any row to trace the full diagnosis across all tabs
-        </div>
-      </div>
-
-      {/* Section 2 — visible only when exception selected */}
-      {selectedExc && (
-        <div style={{ paddingTop: '14px' }}>
-          <AlertBanner
-            level={selectedExc.alert.level}
-            icon={selectedExc.alert.icon}
-            title={selectedExc.alert.title}
-            desc={selectedExc.alert.desc}
-          />
-
-          <div className="two-col">
-            <div className="card" style={{ marginBottom: 0 }}>
-              <div className="card-head">
-                <div className="card-title">
-                  <div className="card-icon ci-amber">⬡</div>
-                  Root cause analysis — {selectedExc.sku}
-                </div>
-                <Pill cls="p-gray">{selectedExc.rca.layer}</Pill>
-              </div>
-              <div className="card-body">
-                <div
-                  className="rca-finding"
-                  children={selectedExc.rca.finding}
-                />
-                <div className="evidence-list">
-                  {selectedExc.rca.evidence.map((ev, i) => (
-                    <div key={i} className="ev-item">
-                      <div className="ev-dot" />
-                      <span>{ev}</span>
-                    </div>
-                  ))}
-                </div>
-                <ConfidenceBar confidence={selectedExc.rca.confidence} />
-              </div>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="card-head">
-              <div className="card-title">
-                <div className="card-icon ci-blue">✦</div>
-                Recommendations & human oversight
-              </div>
-              <Pill cls="p-gray">{selectedExc.actions.length} actions</Pill>
-            </div>
-            <div className="action-grid">
-              {selectedExc.actions.map((action, i) => (
-                <ActionItem key={i} action={action} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  )
+      <details className="technical-detail"><summary>Supporting technical detail & action breakdown</summary>
+        <div className="card-body"><p>{selected.rca.finding}</p><ul>{selected.rca.evidence.map(item => <li key={item}>{item}</li>)}</ul><small>{selected.type} · {selected.tier} · {selected.rca.layer}</small></div>
+        <div className="action-grid">{selected.actions.map((a,i) => <ActionItem key={i} action={a} />)}</div>
+      </details>
+      <p className="planner-hint">For the full trace, use Agent reasoning, RAG retrieval or Eval scores above.</p>
+    </section>}
+  </>
 }

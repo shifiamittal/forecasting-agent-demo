@@ -2,7 +2,7 @@
 
 Interactive Prototype · Synthetic Demo Data
 
-**[Open the public demo](https://genuine-rabanadas-f45aa5.netlify.app/)** · Hosted on Netlify as a static deployment.
+**[Open the public demo](https://forecasting-agent-demo.netlify.app/)** · Hosted on Netlify as a static deployment.
 
 An implemented React prototype for forecast exception review: **Trigger → Observe → Decide → Act → Human Escalation → Learn/Evaluate**.
 
@@ -53,6 +53,8 @@ Reference limitations: progress events are illustrative rather than instrumented
 
 ## Suggested portfolio walkthrough
 
+Planner view is the primary business summary: issue, likely cause, risk and next review action. Selecting an action opens evidence, diagnosis, recommendation and human approval requirements on the same page. Original technical findings and action details remain in an expandable section; the reasoning, retrieval and evaluation tabs retain their full content. Summary counts are calculated from the exceptions: each current entity has three issues, two high-risk issues, three requiring human review and zero eligible for entirely autonomous resolution. Individual reversible steps do not count as autonomous resolution of an issue.
+
 1. Velora Foods → Planner view: three ranked sample exception groups.
 2. `VL-COCOA-BASELINE` → Agent reasoning: expand RCA Diagnostic Agent.
 3. Same exception → RAG retrieval: synthetic historical evidence and relevance examples.
@@ -72,3 +74,4 @@ The production build and lint pass. All nine cases were exercised locally and on
 The source and generated bundle were checked for original engagement identifiers and common credential patterns, with no matches found. This is a scoped review, not a legal clearance or an exhaustive secrets guarantee. All public scenario narratives and business metrics were newly authored as fictional examples.
 
 Deployment uses Netlify Drop and is not automatically connected to GitHub. For updates, run the frontend build and upload only the new `frontend/dist` contents to the same Netlify project.
+
