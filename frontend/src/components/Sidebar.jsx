@@ -1,4 +1,4 @@
-export default function Sidebar({ clients, selectedClient, onSelectClient, cycleData, onRun }) {
+export default function Sidebar({ clients, selectedClient, onSelectClient, cycleData, onReset, resetNotice, resetCount }) {
   const cycle = cycleData.cycle
   return (
     <aside className="sidebar">
@@ -19,7 +19,10 @@ export default function Sidebar({ clients, selectedClient, onSelectClient, cycle
         <div className="cc-row"><span className="cc-k">Actions</span><span className="cc-v">Read-only states</span></div>
         <div className="cc-row"><span className="cc-k">API keys</span><span className="cc-v">Not required</span></div>
       </div></div>
-      <button className="run-btn" onClick={onRun}>↺ Reset scenario</button>
+      <button className="run-btn" onClick={onReset} title="Clear the selection and return to the initial Planner view for this entity">↺ Reset scenario</button>
+      <div className="reset-status" role="status" aria-live="polite">
+        {resetNotice && <span key={resetCount}>Scenario reset. Select an exception to explore again. Synthetic data is unchanged.</span>}
+      </div>
       <div className="sb-footer demo-disclosure">Interactive Prototype · Synthetic Demo Data</div>
     </aside>
   )
