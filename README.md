@@ -2,6 +2,8 @@
 
 Interactive Prototype · Synthetic Demo Data
 
+**[Open the public demo](https://genuine-rabanadas-f45aa5.netlify.app/)** · Hosted on Netlify as a static deployment.
+
 An implemented React prototype for forecast exception review: **Trigger → Observe → Decide → Act → Human Escalation → Learn/Evaluate**.
 
 ## Portfolio demo
@@ -62,3 +64,11 @@ The persistent disclosure should remain visible in screenshots. These screens de
 ## Repository provenance
 
 This is a clean portfolio snapshot with newly authored fictional data. It intentionally excludes the original repository history, old client-specific reference HTML, obsolete sample components and local assistant configuration. Publish this snapshot as a new repository (`forecasting-agent-demo`); do not link an older repository that still exposes historical client-specific narratives.
+
+## Verification
+
+The production build and lint pass. All nine cases were exercised locally and on the public deployment across planner, reasoning, evidence and evaluation tabs, including accordion expansion, entity switching, reset and About. No browser errors or warnings were recorded during those checks. The local backend was stopped. A fresh public-site tab rendered the demo without app state or login; separate HTTP requests without cookies or authorization returned 200, and the served JavaScript/CSS matched the audited local build byte-for-byte. A fully isolated incognito browser context was not available through the testing interface.
+
+The source and generated bundle were checked for original engagement identifiers and common credential patterns, with no matches found. This is a scoped review, not a legal clearance or an exhaustive secrets guarantee. All public scenario narratives and business metrics were newly authored as fictional examples.
+
+Deployment uses Netlify Drop and is not automatically connected to GitHub. For updates, run the frontend build and upload only the new `frontend/dist` contents to the same Netlify project.
