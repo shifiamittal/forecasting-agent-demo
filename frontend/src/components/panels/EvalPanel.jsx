@@ -1,4 +1,4 @@
-export default function EvalPanel({ selectedExc }) {
+function NumericalEvaluation({ selectedExc }) {
   if (!selectedExc) {
     return (
       <div className="empty">
@@ -55,7 +55,7 @@ export default function EvalPanel({ selectedExc }) {
         <div className="card-head">
           <div className="card-title">
             <div className="card-icon ci-green">✓</div>
-            Illustrative evaluation — {selectedExc.sku}
+            Evaluation — {selectedExc.planner.issue}
           </div>
         </div>
         <div className="card-body">
@@ -81,4 +81,15 @@ export default function EvalPanel({ selectedExc }) {
       </div>
     </>
   )
+}
+
+export default function EvalPanel({selectedExc}) {
+ if(!selectedExc) return <div className="empty"><div className="empty-title">Choose an issue in Planner View</div><p>Check evidence, diagnostic order and approval boundaries.</p></div>
+ const e=selectedExc, ev=e.eval, needsReview=ev.dims.some(d=>d.cls!=='pass')
+ const descriptions=[
+ e.planner.diagnosis,
+ e.type==='data_issue'?'The diagnosis stops at missing data before blaming the model.':e.type==='feature_drift'?'Data health is checked before outdated inputs are identified.':'The recorded evaluation accepts the event explanation. Separate feature and model checks are not recorded in the trace.',
+ needsReview?'Assign a review owner and deadline; escalation alone is insufficient.':'Consequential changes remain subject to human approval.'
+ ]
+ return <><header className="support-heading"><h1>Is the recommendation ready for review?</h1><p>{e.planner.issue}</p></header><section className={needsReview?'quality-banner review':'quality-banner'}><h2>{needsReview?'Needs stronger approval controls':'Quality checks passed — approval still required'}</h2><p>{ev.verdict}</p></section><div className="quality-checks">{['Evidence-backed diagnosis?','Correct diagnostic sequence?','Correct autonomy tier?'].map((label,i)=><section className="decision-block" key={label}><h2>{label}</h2><span className={ev.dims[i].cls==='pass'?'pill p-green':'pill p-amber'}>{ev.dims[i].cls==='pass'?'Pass':'Needs review'}</span><p>{descriptions[i]}</p></section>)}</div><section className="decision-block improvement"><h2>Action required</h2><p>{ev.improvement}</p></section><details className="technical-detail"><summary>Underlying scores & evaluation detail</summary><NumericalEvaluation selectedExc={e}/></details></>
 }

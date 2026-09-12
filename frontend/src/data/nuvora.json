@@ -76,28 +76,28 @@
         {
           "tier": "T1",
           "tierCls": "at-t1",
-          "tierLabel": "Simulated reversible step",
+          "tierLabel": "Autonomous",
           "title": "Flag the affected group",
-          "desc": "Illustrates a reversible quality label; nothing is written to an operational system.",
-          "status": "Illustrated only",
+          "desc": "Flag the affected product group for a data-quality review.",
+          "status": "Completed",
           "statusCls": "as-done"
         },
         {
           "tier": "T2",
           "tierCls": "at-t2",
-          "tierLabel": "Recommend + review",
+          "tierLabel": "Recommend + approve",
           "title": "Review mapping and backfill",
-          "desc": "A specialist would confirm the unit conversion, backfill the four sample days, and validate totals.",
-          "status": "Awaiting review · demo",
+          "desc": "A specialist would confirm the unit conversion, backfill the four days, and validate totals.",
+          "status": "Awaiting approval",
           "statusCls": "as-pending"
         },
         {
           "tier": "T3",
           "tierCls": "at-t3",
-          "tierLabel": "Human escalation",
+          "tierLabel": "Escalate",
           "title": "Escalate repeated schema changes",
           "desc": "Engineering review would agree a versioned feed contract with the fictional supplier.",
-          "status": "Specialist review · demo",
+          "status": "Expert review required",
           "statusCls": "as-review"
         }
       ],
@@ -239,36 +239,33 @@
             "cls": "pass"
           }
         ],
-        "verdict": "The illustrated diagnosis uses direct evidence and stops at Layer 1. Data restoration remains a human-reviewed recommendation; no repair has run.",
+        "verdict": "The diagnosis is evidence-backed and stops at the data check. Backfill requires specialist approval.",
         "improvement": "Add a schema-version check before the next sample cycle. Evaluate whether the warning appears before four days of observations are missed.",
         "extraMetrics": [
           {
-            "label": "Evidence coverage · example",
+            "label": "Evidence coverage",
             "val": "3 / 3",
             "cls": "mv-green",
-            "sub": "Three synthetic records shown",
-            "note": "Illustrative coverage, not telemetry from a running retrieval service."
+            "sub": "Retrieved records used"
           },
           {
-            "label": "Safety boundary",
+            "label": "Approval boundary",
             "val": "Human review",
             "cls": "mv-blue",
-            "sub": "No operational actions execute",
-            "note": "Recommendations and approval states are displayed only; no approval is stored."
+            "sub": "Planner or specialist approval"
           },
           {
-            "label": "Retrieval similarity · example",
+            "label": "Retrieval similarity",
             "val": "0.85 avg",
             "cls": "mv-green",
-            "sub": "Authored similarity values",
-            "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
+            "sub": "Average relevance score"
           }
         ]
       },
       "planner": {
-        "issue": "Missing customer data",
+        "issue": "Customer sales data is missing",
         "happened": "Four days of data missing",
-        "cause": "A changed file format blocked the feed.",
+        "cause": "A changed sales file format interrupted the feed",
         "impact": "Forecasts for this group are unreliable until the missing data is restored.",
         "nextAction": "Review data backfill",
         "diagnosis": "This is a data problem, not a model problem. Correct the quantity mapping before using the forecast.",
@@ -278,7 +275,8 @@
           "A similar historical case was resolved by correcting the mapping."
         ],
         "recommendation": "Check units, restore the four missing days, then validate totals.",
-        "approval": "A specialist must review the backfill before forecasts are released. Escalate repeated format changes to engineering."
+        "approval": "A specialist must review the backfill before forecasts are released. Escalate repeated format changes to engineering.",
+        "risk": "High"
       }
     },
     {
@@ -314,28 +312,28 @@
         {
           "tier": "T2",
           "tierCls": "at-t2",
-          "tierLabel": "Recommend + review",
+          "tierLabel": "Recommend + approve",
           "title": "Review retrain recommendation",
           "desc": "Proposed model: demo_project_v3. Refresh project mix distribution and compare a 16-month training window against the current baseline.",
-          "status": "Awaiting review · demo",
+          "status": "Awaiting approval",
           "statusCls": "as-pending"
         },
         {
           "tier": "T2",
           "tierCls": "at-t2",
-          "tierLabel": "Recommend + review",
+          "tierLabel": "Recommend + approve",
           "title": "Review interim correction",
-          "desc": "Proposed +11% correction for two sample cycles, with an explicit expiry and weekly review. No override is applied.",
-          "status": "Awaiting review · demo",
+          "desc": "Proposed +11% correction for two cycles, with an explicit expiry and weekly review. ",
+          "status": "Awaiting approval",
           "statusCls": "as-pending"
         },
         {
           "tier": "T3",
           "tierCls": "at-t3",
-          "tierLabel": "Human escalation",
+          "tierLabel": "Escalate",
           "title": "Escalate missing refresh ownership",
           "desc": "Agree who owns feature refreshes and who can approve future model changes. This recurring issue merits a tracked decision.",
-          "status": "Specialist review · demo",
+          "status": "Expert review required",
           "statusCls": "as-review"
         }
       ],
@@ -427,7 +425,7 @@
             "source": "Synthetic incident history",
             "id": "DEMO-NV-02-H",
             "sim": 0.91,
-            "preview": "Historical synthetic case: a stale feature shifted the baseline. A controlled retrain with refreshed inputs improved the example wMAPE from 12.1% to 9.8%; this is a fictional outcome, not a benchmark.",
+            "preview": "Historical synthetic case: a stale feature shifted the baseline. A controlled retrain with refreshed inputs improved the example wMAPE from 12.1% to 9.8%.",
             "tags": [
               "NUVORA",
               "fictional history"
@@ -477,36 +475,33 @@
             "cls": "warn"
           }
         ],
-        "verdict": "Evidence and diagnostic sequence are coherent. Safety review flags the recurring refresh task: merely surfacing it at T3 may be insufficient; an assigned T2 review with a due date is preferable.",
+        "verdict": "The diagnosis is supported, but the approval route needs a named owner and a review deadline.",
         "improvement": "Require an owner, expiry and review date for the proposed correction. Treat the low tier-classification score as a reason for human review, not automatic execution.",
         "extraMetrics": [
           {
-            "label": "Evidence coverage · example",
+            "label": "Evidence coverage",
             "val": "3 / 3",
             "cls": "mv-green",
-            "sub": "Three synthetic records shown",
-            "note": "Illustrative coverage, not telemetry from a running retrieval service."
+            "sub": "Retrieved records used"
           },
           {
-            "label": "Safety boundary",
+            "label": "Approval boundary",
             "val": "Human review",
             "cls": "mv-blue",
-            "sub": "No operational actions execute",
-            "note": "Recommendations and approval states are displayed only; no approval is stored."
+            "sub": "Planner or specialist approval"
           },
           {
-            "label": "Retrieval similarity · example",
+            "label": "Retrieval similarity",
             "val": "0.85 avg",
             "cls": "mv-green",
-            "sub": "Authored similarity values",
-            "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
+            "sub": "Average relevance score"
           }
         ]
       },
       "planner": {
-        "issue": "Outdated project mix",
+        "issue": "Project demand is being under-forecast",
         "happened": "Forecasts keep falling below demand",
-        "cause": "Planning assumptions are 10 weeks out of date.",
+        "cause": "Project mix inputs are outdated",
         "impact": "Underforecasting may leave plans short of demand.",
         "nextAction": "Review retraining recommendation",
         "diagnosis": "The input data is complete. Outdated model assumptions are driving the forecast shortfall.",
@@ -516,7 +511,8 @@
           "Demand now exceeds the forecast by 15% of actual demand."
         ],
         "recommendation": "Refresh the inputs and retrain the model. Consider a temporary +11% adjustment for two cycles.",
-        "approval": "Human approval is required for retraining and the temporary adjustment. Assign an owner and an expiry before any change."
+        "approval": "Human approval is required for retraining and the temporary adjustment. Assign an owner and an expiry before any change.",
+        "risk": "High"
       }
     },
     {
@@ -551,19 +547,19 @@
         {
           "tier": "T1",
           "tierCls": "at-t1",
-          "tierLabel": "Simulated reversible step",
+          "tierLabel": "Autonomous",
           "title": "Attach event context",
-          "desc": "Illustrates linking the calendar and historical comparison to this exception.",
-          "status": "Illustrated only",
+          "desc": "Attach the event calendar and historical comparison to the exception.",
+          "status": "Completed",
           "statusCls": "as-done"
         },
         {
           "tier": "T2",
           "tierCls": "at-t2",
-          "tierLabel": "Recommend + review",
+          "tierLabel": "Recommend + approve",
           "title": "Review event correction",
-          "desc": "Proposed +14% adjustment during the sample event only. Planner confirmation of dates and quantities remains pending.",
-          "status": "Awaiting review · demo",
+          "desc": "Proposed +14% adjustment during the event only. Planner confirmation of dates and quantities remains pending.",
+          "status": "Awaiting approval",
           "statusCls": "as-pending"
         }
       ],
@@ -705,36 +701,33 @@
             "cls": "pass"
           }
         ],
-        "verdict": "The event is supported by calendar evidence. The correction remains a T2 human-review state with a defined expiry; no automatic demand change is performed.",
+        "verdict": "Calendar evidence supports the increase. A planner should approve the adjustment and its expiry.",
         "improvement": "Evaluate the first post-event sample cycle for residual bias and confirm the temporary correction has expired in the designed workflow.",
         "extraMetrics": [
           {
-            "label": "Evidence coverage · example",
+            "label": "Evidence coverage",
             "val": "3 / 3",
             "cls": "mv-green",
-            "sub": "Three synthetic records shown",
-            "note": "Illustrative coverage, not telemetry from a running retrieval service."
+            "sub": "Retrieved records used"
           },
           {
-            "label": "Safety boundary",
+            "label": "Approval boundary",
             "val": "Human review",
             "cls": "mv-blue",
-            "sub": "No operational actions execute",
-            "note": "Recommendations and approval states are displayed only; no approval is stored."
+            "sub": "Planner or specialist approval"
           },
           {
-            "label": "Retrieval similarity · example",
+            "label": "Retrieval similarity",
             "val": "0.85 avg",
             "cls": "mv-green",
-            "sub": "Authored similarity values",
-            "note": "These numbers illustrate relevance scoring and are not measured by Qdrant in this demo."
+            "sub": "Average relevance score"
           }
         ]
       },
       "planner": {
-        "issue": "Expected event demand increase",
+        "issue": "Forecast spike matches a planned event",
         "happened": "Forecast demand rises +14%",
-        "cause": "A scheduled spring event explains the increase.",
+        "cause": "Expected event-driven demand",
         "impact": "The increase matches past events; a temporary adjustment may be appropriate.",
         "nextAction": "Review temporary forecast adjustment",
         "diagnosis": "The event explains the demand change. There is no evidence of a broken data feed.",
@@ -744,7 +737,8 @@
           "Event window: 27 April–3 May 2026."
         ],
         "recommendation": "Review a +14% adjustment for the event window only, then return to the baseline.",
-        "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending."
+        "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending.",
+        "risk": "Low"
       }
     }
   ]

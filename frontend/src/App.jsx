@@ -19,55 +19,39 @@ export default function App() {
   const [selectedClient, setSelectedClient] = useState('VELORA')
   const [selectedExcId, setSelectedExcId] = useState(null)
   const [activeTab, setActiveTab] = useState('planner')
-  const [resetCount, setResetCount] = useState(0)
-  const [resetNotice, setResetNotice] = useState(false)
   const mainRef = useRef(null)
   const cycleData = SCENARIOS[selectedClient]
   const selectedExc = cycleData.exceptions.find(e => e.id === selectedExcId) ?? null
 
   function selectClient(id) {
-    setResetNotice(false)
     setSelectedClient(id)
     setSelectedExcId(null)
     setActiveTab('planner')
     mainRef.current?.scrollTo(0, 0)
   }
   function selectTab(id) {
-    setResetNotice(false)
     setActiveTab(id)
     mainRef.current?.scrollTo(0, 0)
   }
 
-  function resetScenario() {
-    setSelectedExcId(null)
-    setActiveTab('planner')
-    setResetCount(count => count + 1)
-    setResetNotice(true)
-  }
 
   function selectException(id) {
-    setResetNotice(false)
     setSelectedExcId(id)
   }
 
   return (
     <div className="shell">
       <Sidebar clients={CLIENTS} selectedClient={selectedClient} onSelectClient={selectClient}
-        cycleData={cycleData} onReset={resetScenario} resetNotice={resetNotice} resetCount={resetCount} />
+        cycleData={cycleData} />
       <Topbar activeTab={activeTab} onTabChange={selectTab} selectedExc={selectedExc}
         cycleData={cycleData} selectedClient={selectedClient} />
-      <main className="main" ref={mainRef} key={resetCount}>
-        <details className="demo-about">
-          <summary>About this prototype <span>Trigger → Observe → Decide → Act → Human Escalation → Learn/Evaluate</span></summary>
-          <p><strong>Portfolio demo:</strong> interactive workflow using synthetic fixture data. All companies, products, historical records, metrics, reasoning and evaluation scores are fictional examples. Recommendations and approval states are read-only; no operational actions execute.</p>
-          <p><strong>Designed production architecture:</strong> multi-agent orchestration connected to live forecasting data, LLM reasoning, a RAG knowledge layer and downstream operational tools. The reference backend is preserved in source, but is not part of this static deployment. Here, Act means an illustrated reversible step or a proposed action; consequential changes remain subject to human review.</p>
-        </details>
+      <main className="main" ref={mainRef}>
         <div className={`panel${activeTab === 'planner' ? ' active' : ''}`}>
           <PlannerPanel cycleData={cycleData} selectedExcId={selectedExcId} onSelectExc={selectException} />
         </div>
         <div className={`panel${activeTab === 'reasoning' ? ' active' : ''}`}><ReasoningPanel key={`${selectedClient}-${selectedExcId}`} selectedExc={selectedExc} /></div>
-        <div className={`panel${activeTab === 'rag' ? ' active' : ''}`}><RagPanel selectedExc={selectedExc} /></div>
-        <div className={`panel${activeTab === 'eval' ? ' active' : ''}`}><EvalPanel selectedExc={selectedExc} /></div>
+        <div className={`panel${activeTab === 'rag' ? ' active' : ''}`}><RagPanel key={`${selectedClient}-${selectedExcId}`} selectedExc={selectedExc} /></div>
+        <div className={`panel${activeTab === 'eval' ? ' active' : ''}`}><EvalPanel key={`${selectedClient}-${selectedExcId}`} selectedExc={selectedExc} /></div>
       </main>
     </div>
   )

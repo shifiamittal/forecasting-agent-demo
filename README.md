@@ -10,7 +10,7 @@ An implemented React prototype for forecast exception review: **Trigger → Obse
 
 The public application runs entirely as a static Vite frontend. Three fictional entities and nine synthetic exceptions demonstrate prioritization, root-cause diagnosis, illustrative historical retrieval, corrective recommendations, human-review states and safety evaluation. All names, relationships, dates, identifiers, incidents and performance values are invented examples. They do not describe customer engagements or measured business outcomes.
 
-No backend, account, API keys, Qdrant, LLM calls or enterprise integration is required. Approval cards are read-only: there are no real approvals, retrains, ERP updates, backfills or tickets. Reset scenario clears the selected case; it does not run an agent. Retrieval similarities, confidence and evaluation scores are authored examples.
+No backend, account, API keys, Qdrant, LLM calls or enterprise integration is required. Approval cards are read-only: there are no real approvals, retrains, ERP updates, backfills or tickets. Reset Scenario was removed because there are no mutable forecasts or approvals to reset. Client switching returns to the default Planner View. Retrieval similarities, confidence and evaluation scores are authored examples.
 
 ## Run and build
 
@@ -53,11 +53,11 @@ Reference limitations: progress events are illustrative rather than instrumented
 
 ## Suggested portfolio walkthrough
 
-Planner view is the primary business summary: issue, likely cause, risk and next review action. Selecting an action opens evidence, diagnosis, recommendation and human approval requirements on the same page. Original technical findings and action details remain in an expandable section; the reasoning, retrieval and evaluation tabs retain their full content. Summary counts are calculated from the exceptions: each current entity has three issues, two high-risk issues, three requiring human review and zero eligible for entirely autonomous resolution. Individual reversible steps do not count as autonomous resolution of an issue.
+Planner view is the primary business summary: issue, likely cause, risk and next review action. Selecting an action opens evidence, diagnosis, recommendation and human approval requirements on the same page. Original technical findings and action details remain in an expandable section; the reasoning, retrieval and evaluation tabs retain their full content. Outcome cards summarize the authored action states for the selected client: three exceptions, two completed autonomous steps, four recommendations awaiting approval and two expert escalations. These are scenario outcomes, not live agent execution. The four approval items and two escalations are actions, not distinct exceptions. Expected event cases are displayed as low business risk while their original detector severity remains in the technical fixture.
 
-1. Velora Foods → Planner view: three ranked sample exception groups.
-2. `VL-COCOA-BASELINE` → Agent reasoning: expand RCA Diagnostic Agent.
-3. Same exception → RAG retrieval: synthetic historical evidence and relevance examples.
+1. Velora Foods → Planner View, no exception selected: the recommended default portfolio screenshot. It shows client context, agent outcomes, three business-readable issues and next actions.
+2. Select Review retraining recommendation → Agent Reasoning: plain-language diagnostic path, with the original agent trace available below.
+3. Same exception → RAG Retrieval: precedent, relevance, resolution and outcome, with source metadata below.
 4. Same exception → Planner view: diagnosis, retrain recommendation, interim correction and pending human review.
 5. Same exception → Eval scores: the 0.82 tier-classification warning and improvement note.
 
@@ -69,9 +69,8 @@ This is a clean portfolio snapshot with newly authored fictional data. It intent
 
 ## Verification
 
-The production build and lint pass. All nine cases were exercised locally and on the public deployment across planner, reasoning, evidence and evaluation tabs, including accordion expansion, entity switching, reset and About. No browser errors or warnings were recorded during those checks. The local backend was stopped. A fresh public-site tab rendered the demo without app state or login; separate HTTP requests without cookies or authorization returned 200, and the served JavaScript/CSS matched the audited local build byte-for-byte. A fully isolated incognito browser context was not available through the testing interface.
+The production build and lint pass. All nine cases were exercised locally and on the public deployment across planner, reasoning, evidence and evaluation tabs, including technical accordion expansion and client switching. Reset Scenario and About were removed in the readability pass. No browser errors or warnings were recorded during those checks. The local backend was stopped. A fresh public-site tab rendered the demo without app state or login; separate HTTP requests without cookies or authorization returned 200, and the served JavaScript/CSS matched the audited local build byte-for-byte. A fully isolated incognito browser context was not available through the testing interface.
 
 The source and generated bundle were checked for original engagement identifiers and common credential patterns, with no matches found. This is a scoped review, not a legal clearance or an exhaustive secrets guarantee. All public scenario narratives and business metrics were newly authored as fictional examples.
 
 Deployment uses Netlify Drop and is not automatically connected to GitHub. For updates, run the frontend build and upload only the new `frontend/dist` contents to the same Netlify project.
-
