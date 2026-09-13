@@ -84,5 +84,12 @@ export default function RagPanel({selectedExc}) {
  {title:'Current readiness record',relevance:data?'Confirms the missing files in the affected feed.':feature?'Separates an input-refresh problem from missing sales data.':'Links a complete feed to the registered event dates.',resolution:'No previous resolution recorded; this is a current readiness check.',outcome:p.evidence[0]},
  {title:'Previous review guidance',relevance:'Defines the human decision needed for this type of issue.',resolution:data?'Review the mapping, completeness and totals before releasing forecasts.':feature?'Require named approval for retraining and a short-lived adjustment.':'Review the event dates and the adjustment expiry.',outcome:'Approval guidance recorded; no completed outcome is recorded for this item.'}
  ]
+ if(e.monitoring) {
+ records[0].resolution='No corrective action; monitored through event window';
+ records[0].outcome='Forecast returned to baseline after the event ended';
+ records[2].relevance='Defines when monitoring is sufficient and when escalation is needed.';
+ records[2].resolution='Monitor through the promotion window; escalate only if actual demand materially diverges from the expected range.';
+ records[2].outcome='No approval required. Monitoring review point: 3 May 2026.';
+ }
  return <><header className="support-heading"><h1>History behind the recommendation</h1><p>{p.issue}</p></header><div className="precedent-list">{records.map((record,i)=><article className="precedent-card" key={record.title}><h2>{record.title}</h2><dl><div><dt>Why it is relevant</dt><dd>{record.relevance}</dd></div><div><dt>{i===1?'Resolution status':'Previous resolution'}</dt><dd>{record.resolution}</dd></div><div><dt>Outcome</dt><dd>{record.outcome}</dd></div></dl><details className="technical-detail"><summary>Source & relevance</summary><ChunkCard chunk={e.rag.chunks[i]}/></details></article>)}</div><details className="technical-detail"><summary>Retrieval method & source metadata</summary><RetrievalDetails selectedExc={e}/></details></>
 }

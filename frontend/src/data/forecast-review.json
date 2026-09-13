@@ -21,8 +21,8 @@
       "exc-3": {
         "affectedSkus": 124,
         "updated": "23 Apr 2026",
-        "action": "Temporary adjustment",
-        "status": "Awaiting planner approval",
+        "action": "No corrective action needed",
+        "status": "Monitoring through promotion window",
         "priority": "Low",
         "rank": 3
       }

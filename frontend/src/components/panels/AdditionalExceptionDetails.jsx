@@ -45,7 +45,12 @@ export default function AdditionalExceptionDetails({ data, exception, queue, hea
       <h3 className="ed-subheading">{data.why}</h3><ul>{data.reasons.map(reason => <li key={reason}>{reason}</li>)}</ul>
     </section>
     <section className="ed-section">
-      <SectionTitle number="4">Action & approval</SectionTitle><p>This recommendation requires human approval before it can be executed.</p>
+      <SectionTitle number="4">Action & approval</SectionTitle>
+      {data.monitoring ? <div className="ed-approval">
+        <h3>{data.action}</h3><p><strong>Status:</strong> {data.status}</p>
+        <p>{data.monitoringCopy}</p><p><strong>Monitoring review point:</strong> {data.reviewPoint}</p>
+        <p className="ed-preview-note">Synthetic monitoring scenario only. No live monitoring is running.</p>
+      </div> : <><p>This recommendation requires human approval before it can be executed.</p>
       <div className="ed-approval">
         <span className="ed-tier">Tier 2 — Recommend + approve</span><h3>{data.action}</h3><p><strong>Status:</strong> {data.status}</p>
         <div className="ed-buttons">
@@ -56,6 +61,7 @@ export default function AdditionalExceptionDetails({ data, exception, queue, hea
         <p className="ed-preview-note">Decision preview only. Nothing is saved or executed; selections reset when you leave this page.</p>
         <div className="ed-feedback" role="status" aria-live="polite">{decision && `${decision}: ${data.action}. Preview only.`}</div>
       </div>
+      </>}
       {data.escalation && <div className="ed-escalation">
         <span className="ed-tier">Tier 3 — Expert escalation</span><h3>{data.escalation.title}</h3><p>{data.escalation.copy}</p>
         <button className="ed-secondary" onClick={() => setEscalation(true)}>{data.escalation.button}</button>

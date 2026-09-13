@@ -523,22 +523,22 @@
       "sev": "MED",
       "sevCls": "p-blue",
       "type": "demand_signal",
-      "tier": "T2",
-      "tierCls": "tier-t2",
-      "diagnosis": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry.",
+      "tier": "T1",
+      "tierCls": "tier-t1",
+      "diagnosis": "A registered promotion explains the +22% demand change. No corrective action is needed; monitor through the promotion window.",
       "alert": {
         "level": "a-green",
         "icon": "✓",
-        "title": "The event uplift is expected; review the timing",
-        "desc": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry."
+        "title": "The event uplift is expected; monitor through the promotion",
+        "desc": "A registered promotion explains the +22% demand change. No corrective action is needed; monitor through the promotion window."
       },
       "rca": {
-        "finding": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +22% falls inside the scenario's prior-event range of +18–24%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction.",
+        "finding": "This cocoa gift boxes event group has clean inputs, no material feature drift and no persistent model degradation. A registered promotion runs from 2026-04-27 through 2026-05-03. The +22% forecast change is within the historical 18–24% range. This is an expected demand signal, not a data or model failure. Monitor through the promotion and reassess only if actual demand materially diverges.",
         "evidence": [
           "Event-group sample completeness: 1.00; no feed validation failures.",
           "Synthetic calendar window: 2026-04-27 to 2026-05-03.",
           "Example forecast delta: +22%; fictional historical range: +18–24%.",
-          "After the event, the proposed correction expires and the baseline is reviewed."
+          "Monitoring review point: end of promotion window, 3 May 2026. No override or retraining required."
         ],
         "confidence": 91,
         "layer": "External signal — Layer 4",
@@ -553,15 +553,6 @@
           "desc": "Attach the event calendar and historical comparison to the exception.",
           "status": "Completed",
           "statusCls": "as-done"
-        },
-        {
-          "tier": "T2",
-          "tierCls": "at-t2",
-          "tierLabel": "Recommend + approve",
-          "title": "Review event correction",
-          "desc": "Proposed +12% adjustment during the event only. Planner confirmation of dates and quantities remains pending.",
-          "status": "Awaiting approval",
-          "statusCls": "as-pending"
         }
       ],
       "agentSummary": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation.",
@@ -580,7 +571,7 @@
             },
             {
               "kind": "obs",
-              "text": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry."
+              "text": "A registered promotion explains the +22% demand change. No corrective action is needed; monitor through the promotion window."
             },
             {
               "kind": "finding",
@@ -602,11 +593,11 @@
             },
             {
               "kind": "obs",
-              "text": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +22%; fictional historical range: +18–24%. After the event, the proposed correction expires and the baseline is reviewed."
+              "text": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +22%; fictional historical range: +18–24%. Monitoring review point: end of promotion window, 3 May 2026. No override or retraining required."
             },
             {
               "kind": "finding",
-              "text": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +22% falls inside the scenario's prior-event range of +18–24%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction."
+              "text": "This cocoa gift boxes event group has clean inputs, no material feature drift and no persistent model degradation. A registered promotion runs from 2026-04-27 through 2026-05-03. The +22% forecast change is within the historical 18–24% range. This is an expected demand signal, not a data or model failure. Monitor through the promotion and reassess only if actual demand materially diverges."
             }
           ]
         },
@@ -616,7 +607,7 @@
           "idxColor": "#2563eb",
           "result": "Illustrative trace",
           "resultCls": "p-blue",
-          "summary": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure.",
+          "summary": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range.",
           "steps": [
             {
               "kind": "action",
@@ -628,7 +619,7 @@
             },
             {
               "kind": "finding",
-              "text": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure."
+              "text": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range."
             }
           ]
         }
@@ -652,7 +643,7 @@
             "source": "Synthetic incident history",
             "id": "DEMO-VL-03-H",
             "sim": 0.91,
-            "preview": "Historical synthetic promotion: uplift of 18–24% was handled with a temporary event-window adjustment. The correction expired when the promotion ended; forecast returned to baseline in the following cycle.",
+            "preview": "Comparable seasonal promotion: historical uplift of 18–24%. No corrective action; monitored through event window. Forecast returned to baseline after the event ended.",
             "tags": [
               "VELORA",
               "fictional history"
@@ -674,7 +665,7 @@
             "source": "Synthetic review precedent",
             "id": "DEMO-VL-03-P",
             "sim": 0.79,
-            "preview": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure.",
+            "preview": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range.",
             "tags": [
               "VELORA",
               "human oversight"
@@ -702,8 +693,8 @@
             "cls": "pass"
           }
         ],
-        "verdict": "Calendar evidence supports the increase. A planner should approve the adjustment and its expiry.",
-        "improvement": "Evaluate the first post-event sample cycle for residual bias and confirm the temporary correction has expired in the designed workflow.",
+        "verdict": "Calendar and historical evidence support the increase. Monitoring is appropriate; no corrective action or approval is required.",
+        "improvement": "Review actual demand against the expected promotional range and confirm return to baseline after 3 May 2026.",
         "extraMetrics": [
           {
             "label": "Evidence coverage",
@@ -713,9 +704,9 @@
           },
           {
             "label": "Approval boundary",
-            "val": "Human review",
+            "val": "No approval required",
             "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
+            "sub": "Monitor expected event"
           },
           {
             "label": "Retrieval similarity",
@@ -729,18 +720,19 @@
         "issue": "Forecast spike matches a planned event",
         "happened": "Forecast demand rises +22%",
         "cause": "Expected event-driven demand",
-        "impact": "The increase matches past events; a temporary adjustment may be appropriate.",
-        "nextAction": "Review temporary forecast adjustment",
+        "impact": "The increase matches past promotions; monitor through the event window.",
+        "nextAction": "No corrective action needed",
         "diagnosis": "The event explains the demand change. There is no evidence of a broken data feed.",
         "evidence": [
           "Inputs are 100% complete; no feed failures.",
           "Demand change: +22%, within the historical +18–24% range.",
           "Event window: 27 April–3 May 2026."
         ],
-        "recommendation": "Review a +12% adjustment for the event window only, then return to the baseline.",
-        "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending.",
+        "recommendation": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range.",
+        "approval": "No approval required. Monitoring review point: 3 May 2026.",
         "risk": "Low"
-      }
+      },
+      "monitoring": true
     }
   ]
 }
