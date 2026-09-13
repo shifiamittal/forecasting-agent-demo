@@ -189,7 +189,7 @@
             "source": "Synthetic incident history",
             "id": "DEMO-VL-01-H",
             "sim": 0.91,
-            "preview": "Historical synthetic case: renamed quantity column caused validation failures. A reviewed mapping correction restored completeness in the next sample cycle.",
+            "preview": "Synthetic retail-format incident: a quantity column was renamed, causing validation failures. The mapping was corrected and missing files reprocessed. Data completeness was restored in the next cycle.",
             "tags": [
               "VELORA",
               "fictional history"
@@ -264,7 +264,7 @@
       },
       "planner": {
         "issue": "Retail sales data is missing",
-        "happened": "Four days of data missing",
+        "happened": "four days of data missing",
         "cause": "A changed sales file format interrupted the feed",
         "impact": "Forecasts for this group are unreliable until the missing data is restored.",
         "nextAction": "Review data backfill",
@@ -525,22 +525,22 @@
       "type": "demand_signal",
       "tier": "T2",
       "tierCls": "tier-t2",
-      "diagnosis": "A fictional spring event explains the +16% demand change. Review the proposed correction and expiry.",
+      "diagnosis": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry.",
       "alert": {
         "level": "a-green",
         "icon": "✓",
         "title": "The event uplift is expected; review the timing",
-        "desc": "A fictional spring event explains the +16% demand change. Review the proposed correction and expiry."
+        "desc": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry."
       },
       "rca": {
-        "finding": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +16% falls inside the scenario's prior-event range of +12–21%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction.",
+        "finding": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +22% falls inside the scenario's prior-event range of +18–24%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction.",
         "evidence": [
-          "Event-group sample completeness: 0.98; no feed validation failures.",
+          "Event-group sample completeness: 1.00; no feed validation failures.",
           "Synthetic calendar window: 2026-04-27 to 2026-05-03.",
-          "Example forecast delta: +16%; fictional historical range: +12–21%.",
+          "Example forecast delta: +22%; fictional historical range: +18–24%.",
           "After the event, the proposed correction expires and the baseline is reviewed."
         ],
-        "confidence": 90,
+        "confidence": 91,
         "layer": "External signal — Layer 4",
         "confCls": "mv-green"
       },
@@ -559,7 +559,7 @@
           "tierCls": "at-t2",
           "tierLabel": "Recommend + approve",
           "title": "Review event correction",
-          "desc": "Proposed +16% adjustment during the event only. Planner confirmation of dates and quantities remains pending.",
+          "desc": "Proposed +12% adjustment during the event only. Planner confirmation of dates and quantities remains pending.",
           "status": "Awaiting approval",
           "statusCls": "as-pending"
         }
@@ -580,7 +580,7 @@
             },
             {
               "kind": "obs",
-              "text": "A fictional spring event explains the +16% demand change. Review the proposed correction and expiry."
+              "text": "A fictional spring event explains the +22% demand change. Review the proposed correction and expiry."
             },
             {
               "kind": "finding",
@@ -602,11 +602,11 @@
             },
             {
               "kind": "obs",
-              "text": "Event-group sample completeness: 0.98; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +16%; fictional historical range: +12–21%. After the event, the proposed correction expires and the baseline is reviewed."
+              "text": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +22%; fictional historical range: +18–24%. After the event, the proposed correction expires and the baseline is reviewed."
             },
             {
               "kind": "finding",
-              "text": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +16% falls inside the scenario's prior-event range of +12–21%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction."
+              "text": "This cocoa gift boxes event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +22% falls inside the scenario's prior-event range of +18–24%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction."
             }
           ]
         },
@@ -652,7 +652,7 @@
             "source": "Synthetic incident history",
             "id": "DEMO-VL-03-H",
             "sim": 0.91,
-            "preview": "Historical synthetic event: a time-limited correction covered the registered window, then expired. The following sample cycle returned to baseline without a persistent offset.",
+            "preview": "Historical synthetic promotion: uplift of 18–24% was handled with a temporary event-window adjustment. The correction expired when the promotion ended; forecast returned to baseline in the following cycle.",
             "tags": [
               "VELORA",
               "fictional history"
@@ -663,7 +663,7 @@
             "source": "Synthetic readiness record",
             "id": "DEMO-VL-03-R",
             "sim": 0.84,
-            "preview": "Event-group sample completeness: 0.98; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03.",
+            "preview": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03.",
             "tags": [
               "VELORA",
               "demand_signal"
@@ -727,17 +727,17 @@
       },
       "planner": {
         "issue": "Forecast spike matches a planned event",
-        "happened": "Forecast demand rises +16%",
+        "happened": "Forecast demand rises +22%",
         "cause": "Expected event-driven demand",
         "impact": "The increase matches past events; a temporary adjustment may be appropriate.",
         "nextAction": "Review temporary forecast adjustment",
         "diagnosis": "The event explains the demand change. There is no evidence of a broken data feed.",
         "evidence": [
-          "Inputs are 98% complete; no feed failures.",
-          "Demand change: +16%, within the historical +12–21% range.",
+          "Inputs are 100% complete; no feed failures.",
+          "Demand change: +22%, within the historical +18–24% range.",
           "Event window: 27 April–3 May 2026."
         ],
-        "recommendation": "Review a +16% adjustment for the event window only, then return to the baseline.",
+        "recommendation": "Review a +12% adjustment for the event window only, then return to the baseline.",
         "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending.",
         "risk": "Low"
       }
