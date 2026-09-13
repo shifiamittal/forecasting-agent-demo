@@ -74,3 +74,9 @@ The production build and lint pass. All nine cases were exercised locally and on
 The source and generated bundle were checked for original engagement identifiers and common credential patterns, with no matches found. This is a scoped review, not a legal clearance or an exhaustive secrets guarantee. All public scenario narratives and business metrics were newly authored as fictional examples.
 
 Deployment uses Netlify Drop and is not automatically connected to GitHub. For updates, run the frontend build and upload only the new `frontend/dist` contents to the same Netlify project.
+
+## Exception detail routes
+
+Rows open dedicated `/exceptions/...` URLs. The flagship page is `/exceptions/seasonal-underforecast`. Browser Back/Forward, direct links and refresh are supported through the static Netlify rewrite. The Forecast Review search and filter selections remain available when returning during the same session. All nine cases have dedicated detail pages; the seasonal case includes the expanded RCA, demand-index chart and interactive decision previews.
+
+Approval, rejection, change-request and escalation controls are local previews. They do not save decisions, run a retrain or create tickets, and reset when leaving the detail page. The chart is a synthetic representative product series, separate from the portfolio-wide accuracy summary. Its latest point illustrates a 15% underforecast. The affected share is 14.3% (1,842 of 12,842 SKUs); 28% would require a different denominator. The seasonal historical precedent now records a 2.1-point wMAPE improvement over two cycles, consistent in details and retrieval.

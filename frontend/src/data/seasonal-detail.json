@@ -1,0 +1,17 @@
+{
+  "model": "demo_seasonal_v3",
+  "feature": "Seasonal demand coefficient",
+  "trainingMonths": 16,
+  "confidence": 88,
+  "metrics": [{"label":"3 cycles ago","wmape":8.6,"bias":6},{"label":"2 cycles ago","wmape":10.4,"bias":10},{"label":"Latest cycle","wmape":12.7,"bias":15}],
+  "demandSeries": [{"label":"3 cycles ago","forecast":94,"actual":100},{"label":"2 cycles ago","forecast":99,"actual":110},{"label":"Latest cycle","forecast":102,"actual":120}],
+  "checks": [
+    {"check":"Data health","finding":"Inputs are 97% complete; no rejected files.","conclusion":"Data pipeline is healthy"},
+    {"check":"Feature drift","finding":"Seasonal demand coefficient drift = 0.73 vs threshold 0.55.","conclusion":"Root cause found: feature drift","root":true},
+    {"check":"Model performance","finding":"wMAPE worsened 8.6% → 10.4% → 12.7%; bias +0.06 → +0.10 → +0.15.","conclusion":"Model is systematically underforecasting"},
+    {"check":"External signals","finding":"No external event sufficiently explains the persistent degradation.","conclusion":"Not the primary cause"}
+  ],
+  "diagnosis":"Seasonal model inputs have become stale. The model is operating on an outdated representation of seasonal demand, resulting in persistent underforecasting across multiple cycles.",
+  "reasons":["Degradation has persisted across three cycles","A material feature drift has been identified","Model bias is steadily worsening","Refreshing the underlying seasonal feature addresses the root cause rather than masking the problem"],
+  "precedent":{"id":"DEMO-VL-02-H","issue":"Seasonal feature staleness","resolution":"Refreshed feature + model retrain","outcome":"wMAPE improved by 2.1 points within 2 cycles"}
+}
