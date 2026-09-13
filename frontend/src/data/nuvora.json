@@ -101,165 +101,12 @@
           "statusCls": "as-review"
         }
       ],
-      "agentSummary": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('NV-CERAMIC-FEED')"
-            },
-            {
-              "kind": "obs",
-              "text": "A simulated file-format change interrupted the Elmport Supply sample feed. Review the missing observations before using this group."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-NV-01')"
-            },
-            {
-              "kind": "obs",
-              "text": "Example source: Elmport Supply · last sample received 2026-04-20 Four synthetic daily files rejected because quantity_case changed to quantity_units. Sample completeness score: 0.46; review threshold: 0.75. Historical example DEMO-NV-01-H: the same validation pattern was resolved with a mapping correction."
-            },
-            {
-              "kind": "finding",
-              "text": "The synthetic ceramic panels feed is missing four days of observations. A sample export renamed its quantity field; validation rejected the new format rather than ingesting misleading totals. This issue is confined to this feed group. The recommended next step is a mapping check and a reviewed backfill, followed by validation before releasing forecasts."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('NV-CERAMIC-FEED')"
-            },
-            {
-              "kind": "obs",
-              "text": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs."
-            },
-            {
-              "kind": "finding",
-              "text": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "data_issue Modular building materials prior resolution",
-        "intent": "data_issue · illustrative retrieval",
-        "filters": [
-          "entity: NUVORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-NV-01-H",
-            "sim": 0.91,
-            "preview": "Historical synthetic case: renamed quantity column caused validation failures. A reviewed mapping correction restored completeness in the next sample cycle.",
-            "tags": [
-              "NUVORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09"
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-NV-01-R",
-            "sim": 0.84,
-            "preview": "Example source: Elmport Supply · last sample received 2026-04-20 Four synthetic daily files rejected because quantity_case changed to quantity_units.",
-            "tags": [
-              "NUVORA",
-              "data_issue"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-NV-01-P",
-            "sim": 0.79,
-            "preview": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals.",
-            "tags": [
-              "NUVORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 94,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.93,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.96,
-            "cls": "pass"
-          }
-        ],
-        "verdict": "The diagnosis is evidence-backed and stops at the data check. Backfill requires specialist approval.",
-        "improvement": "Add a schema-version check before the next sample cycle. Evaluate whether the warning appears before four days of observations are missed.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "Human review",
-            "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          true
         ]
       },
       "planner": {
@@ -277,7 +124,8 @@
         "recommendation": "Check units, restore the four missing days, then validate totals.",
         "approval": "A specialist must review the backfill before forecasts are released. Escalate repeated format changes to engineering.",
         "risk": "High"
-      }
+      },
+      "precedentSummary": "Historical synthetic case: renamed quantity column caused validation failures. A reviewed mapping correction restored completeness in the next sample cycle."
     },
     {
       "id": "exc-2",
@@ -337,165 +185,12 @@
           "statusCls": "as-review"
         }
       ],
-      "agentSummary": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('NV-CERAMIC-BASELINE')"
-            },
-            {
-              "kind": "obs",
-              "text": "The clean-feed group uses an outdated project mix distribution. Compare retraining with an interim correction."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-NV-02')"
-            },
-            {
-              "kind": "obs",
-              "text": "This group uses a separate validated feed: completeness 0.97 with no rejected files. Synthetic feature: project mix distribution · drift 0.69 > 0.55. Illustrative wMAPE: 8.6% → 10.4% → 12.7% across three cycles. Underforecast bias (actual minus forecast, divided by actual): +0.06 → +0.10 → +0.15. Historical example DEMO-NV-02-H supports refreshing the feature before retraining."
-            },
-            {
-              "kind": "finding",
-              "text": "For this separate modular building materials group, the sample feeds are complete. The project mix distribution has not been refreshed for ten weeks, and its drift score is 0.69 against a 0.55 review threshold. Synthetic demand exceeds forecasts across three successive cycles. A refreshed feature set and model retrain are recommended; a time-limited correction is proposed while the change is reviewed."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('NV-CERAMIC-BASELINE')"
-            },
-            {
-              "kind": "obs",
-              "text": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history."
-            },
-            {
-              "kind": "finding",
-              "text": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "feature_drift Modular building materials prior resolution",
-        "intent": "feature_drift · illustrative retrieval",
-        "filters": [
-          "entity: NUVORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-NV-02-H",
-            "sim": 0.91,
-            "preview": "Historical synthetic case: a stale feature shifted the baseline. A controlled retrain with refreshed inputs improved the example wMAPE from 12.1% to 9.8%.",
-            "tags": [
-              "NUVORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09"
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-NV-02-R",
-            "sim": 0.84,
-            "preview": "This group uses a separate validated feed: completeness 0.97 with no rejected files. Synthetic feature: project mix distribution · drift 0.69 > 0.55.",
-            "tags": [
-              "NUVORA",
-              "feature_drift"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-NV-02-P",
-            "sim": 0.79,
-            "preview": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow.",
-            "tags": [
-              "NUVORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 88,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.92,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.82,
-            "cls": "warn"
-          }
-        ],
-        "verdict": "The diagnosis is supported, but the approval route needs a named owner and a review deadline.",
-        "improvement": "Require an owner, expiry and review date for the proposed correction. Treat the low tier-classification score as a reason for human review, not automatic execution.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "Human review",
-            "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          false
         ]
       },
       "planner": {
@@ -513,7 +208,8 @@
         "recommendation": "Refresh the inputs and retrain the model. Consider a temporary +11% adjustment for two cycles.",
         "approval": "Human approval is required for retraining and the temporary adjustment. Assign an owner and an expiry before any change.",
         "risk": "High"
-      }
+      },
+      "precedentSummary": "Historical synthetic case: a stale feature shifted the baseline. A controlled retrain with refreshed inputs improved the example wMAPE from 12.1% to 9.8%."
     },
     {
       "id": "exc-3",
@@ -563,165 +259,12 @@
           "statusCls": "as-pending"
         }
       ],
-      "agentSummary": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('NV-CERAMIC-EVENT')"
-            },
-            {
-              "kind": "obs",
-              "text": "A fictional spring event explains the +14% demand change. Review the proposed correction and expiry."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-NV-03')"
-            },
-            {
-              "kind": "obs",
-              "text": "Event-group sample completeness: 0.98; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +14%; fictional historical range: +12–21%. After the event, the proposed correction expires and the baseline is reviewed."
-            },
-            {
-              "kind": "finding",
-              "text": "This ceramic panels event group has clean inputs. A fictional spring service-and-stock event is registered for 2026-04-27 through 2026-05-03. The sample forecast change of +14% falls inside the scenario's prior-event range of +12–21%. Treat it as an expected demand signal. A planner would still check quantities, timing and expiry before approving a temporary correction."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('NV-CERAMIC-EVENT')"
-            },
-            {
-              "kind": "obs",
-              "text": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation."
-            },
-            {
-              "kind": "finding",
-              "text": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "demand_signal Modular building materials prior resolution",
-        "intent": "demand_signal · illustrative retrieval",
-        "filters": [
-          "entity: NUVORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-NV-03-H",
-            "sim": 0.91,
-            "preview": "Historical synthetic event: a time-limited correction covered the registered window, then expired. The following sample cycle returned to baseline without a persistent offset.",
-            "tags": [
-              "NUVORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09"
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-NV-03-R",
-            "sim": 0.84,
-            "preview": "Event-group sample completeness: 0.98; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03.",
-            "tags": [
-              "NUVORA",
-              "demand_signal"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-NV-03-P",
-            "sim": 0.79,
-            "preview": "Recommend planner review of the event window and correction expiry. Do not interpret an expected event as a model failure.",
-            "tags": [
-              "NUVORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 92,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.92,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.94,
-            "cls": "pass"
-          }
-        ],
-        "verdict": "Calendar evidence supports the increase. A planner should approve the adjustment and its expiry.",
-        "improvement": "Evaluate the first post-event sample cycle for residual bias and confirm the temporary correction has expired in the designed workflow.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "Human review",
-            "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          true
         ]
       },
       "planner": {
@@ -739,7 +282,8 @@
         "recommendation": "Review a +14% adjustment for the event window only, then return to the baseline.",
         "approval": "A planner must confirm quantities, dates and expiry. The adjustment remains pending.",
         "risk": "Low"
-      }
+      },
+      "precedentSummary": "Historical synthetic event: a time-limited correction covered the registered window, then expired. The following sample cycle returned to baseline without a persistent offset."
     }
   ]
 }

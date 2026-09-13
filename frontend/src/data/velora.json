@@ -101,165 +101,12 @@
           "statusCls": "as-review"
         }
       ],
-      "agentSummary": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('VL-COCOA-FEED')"
-            },
-            {
-              "kind": "obs",
-              "text": "A simulated file-format change interrupted the Maplebridge Market sample feed. Review the missing observations before using this group."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-VL-01')"
-            },
-            {
-              "kind": "obs",
-              "text": "Example source: Maplebridge Market · last sample received 2026-04-20 Four synthetic daily files rejected because quantity_case changed to quantity_units. Sample completeness score: 0.46; review threshold: 0.75. Historical example DEMO-VL-01-H: the same validation pattern was resolved with a mapping correction."
-            },
-            {
-              "kind": "finding",
-              "text": "The synthetic cocoa gift boxes feed is missing four days of observations. A sample export renamed its quantity field; validation rejected the new format rather than ingesting misleading totals. This issue is confined to this feed group. The recommended next step is a mapping check and a reviewed backfill, followed by validation before releasing forecasts."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('VL-COCOA-FEED')"
-            },
-            {
-              "kind": "obs",
-              "text": "Stop at Layer 1: missing source observations explain the exception. Do not infer a model defect from incomplete inputs."
-            },
-            {
-              "kind": "finding",
-              "text": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "data_issue Spring confectionery prior resolution",
-        "intent": "data_issue · illustrative retrieval",
-        "filters": [
-          "entity: VELORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-VL-01-H",
-            "sim": 0.91,
-            "preview": "Synthetic retail-format incident: a quantity column was renamed, causing validation failures. The mapping was corrected and missing files reprocessed. Data completeness was restored in the next cycle.",
-            "tags": [
-              "VELORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09"
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-VL-01-R",
-            "sim": 0.84,
-            "preview": "Example source: Maplebridge Market · last sample received 2026-04-20 Four synthetic daily files rejected because quantity_case changed to quantity_units.",
-            "tags": [
-              "VELORA",
-              "data_issue"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-VL-01-P",
-            "sim": 0.79,
-            "preview": "Correct the input mapping first. Release forecasts only after a human reviews completeness and totals.",
-            "tags": [
-              "VELORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 94,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.93,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.96,
-            "cls": "pass"
-          }
-        ],
-        "verdict": "The diagnosis is evidence-backed and stops at the data check. Backfill requires specialist approval.",
-        "improvement": "Add a schema-version check before the next sample cycle. Evaluate whether the warning appears before four days of observations are missed.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "Human review",
-            "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          true
         ]
       },
       "planner": {
@@ -277,7 +124,8 @@
         "recommendation": "Check units, restore the four missing days, then validate totals.",
         "approval": "A specialist must review the backfill before forecasts are released. Escalate repeated format changes to engineering.",
         "risk": "High"
-      }
+      },
+      "precedentSummary": "Synthetic retail-format incident: a quantity column was renamed, causing validation failures. The mapping was corrected and missing files reprocessed. Data completeness was restored in the next cycle."
     },
     {
       "id": "exc-2",
@@ -337,166 +185,12 @@
           "statusCls": "as-review"
         }
       ],
-      "agentSummary": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('VL-COCOA-BASELINE')"
-            },
-            {
-              "kind": "obs",
-              "text": "The clean-feed group uses an outdated seasonal demand coefficient. Compare retraining with an interim correction."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-VL-02')"
-            },
-            {
-              "kind": "obs",
-              "text": "This group uses a separate validated feed: completeness 0.97 with no rejected files. Synthetic feature: seasonal demand coefficient · drift 0.73 > 0.55. Illustrative wMAPE: 8.6% → 10.4% → 12.7% across three cycles. Underforecast bias (actual minus forecast, divided by actual): +0.06 → +0.10 → +0.15. Historical example DEMO-VL-02-H supports refreshing the feature before retraining."
-            },
-            {
-              "kind": "finding",
-              "text": "For this separate spring confectionery group, the sample feeds are complete. The seasonal demand coefficient has not been refreshed for ten weeks, and its drift score is 0.73 against a 0.55 review threshold. Synthetic demand exceeds forecasts across three successive cycles. A refreshed feature set and model retrain are recommended; a time-limited correction is proposed while the change is reviewed."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('VL-COCOA-BASELINE')"
-            },
-            {
-              "kind": "obs",
-              "text": "Layer 1 passes for this group. Layer 2 provides a specific stale-feature signal, supported by the synthetic history."
-            },
-            {
-              "kind": "finding",
-              "text": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "feature_drift Spring confectionery prior resolution",
-        "intent": "feature_drift · illustrative retrieval",
-        "filters": [
-          "entity: VELORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-VL-02-H",
-            "sim": 0.91,
-            "preview": "Historical case: a stale seasonal feature shifted the baseline. Refreshed inputs and a controlled model retrain improved wMAPE from 12.1% to 10.0% within two cycles.",
-            "tags": [
-              "VELORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09",
-            "outcome": "wMAPE improved by 2.1 points within 2 cycles."
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-VL-02-R",
-            "sim": 0.84,
-            "preview": "This group uses a separate validated feed: completeness 0.97 with no rejected files. Synthetic feature: seasonal demand coefficient · drift 0.73 > 0.55.",
-            "tags": [
-              "VELORA",
-              "feature_drift"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-VL-02-P",
-            "sim": 0.79,
-            "preview": "Recommend refreshed features and retraining, plus a short-lived correction. Both require named human approval in the designed workflow.",
-            "tags": [
-              "VELORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 88,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.92,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.82,
-            "cls": "warn"
-          }
-        ],
-        "verdict": "The diagnosis is supported, but the approval route needs a named owner and a review deadline.",
-        "improvement": "Require an owner, expiry and review date for the proposed correction. Treat the low tier-classification score as a reason for human review, not automatic execution.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "Human review",
-            "cls": "mv-blue",
-            "sub": "Planner or specialist approval"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          true
         ]
       },
       "planner": {
@@ -514,7 +208,8 @@
         "recommendation": "Refresh the inputs and retrain the model. Consider a temporary +11% adjustment for two cycles.",
         "approval": "Human approval is required for retraining and the temporary adjustment. Assign an owner and an expiry before any change.",
         "risk": "High"
-      }
+      },
+      "precedentSummary": "Historical case: a stale seasonal feature shifted the baseline. Refreshed inputs and a controlled model retrain improved wMAPE from 12.1% to 10.0% within two cycles."
     },
     {
       "id": "exc-3",
@@ -555,165 +250,12 @@
           "statusCls": "as-done"
         }
       ],
-      "agentSummary": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation.",
-      "agents": [
-        {
-          "name": "Trigger Router",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Identify the sample exception and choose the diagnostic path.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "route_demo_exception('VL-COCOA-EVENT')"
-            },
-            {
-              "kind": "obs",
-              "text": "A registered promotion explains the +22% demand change. No corrective action is needed; monitor through the promotion window."
-            },
-            {
-              "kind": "finding",
-              "text": "Route this group for evidence review."
-            }
-          ]
-        },
-        {
-          "name": "RCA Diagnostic Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "inspect_demo_evidence('DEMO-VL-03')"
-            },
-            {
-              "kind": "obs",
-              "text": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03. Example forecast delta: +22%; fictional historical range: +18–24%. Monitoring review point: end of promotion window, 3 May 2026. No override or retraining required."
-            },
-            {
-              "kind": "finding",
-              "text": "This cocoa gift boxes event group has clean inputs, no material feature drift and no persistent model degradation. A registered promotion runs from 2026-04-27 through 2026-05-03. The +22% forecast change is within the historical 18–24% range. This is an expected demand signal, not a data or model failure. Monitor through the promotion and reassess only if actual demand materially diverges."
-            }
-          ]
-        },
-        {
-          "name": "Retrain / Override Agent",
-          "idxBg": "#eff6ff",
-          "idxColor": "#2563eb",
-          "result": "Illustrative trace",
-          "resultCls": "p-blue",
-          "summary": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range.",
-          "steps": [
-            {
-              "kind": "action",
-              "code": "prepare_demo_recommendation('VL-COCOA-EVENT')"
-            },
-            {
-              "kind": "obs",
-              "text": "Data checks pass; no significant feature or model change is present in this scenario. The registered external event explains the deviation."
-            },
-            {
-              "kind": "finding",
-              "text": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range."
-            }
-          ]
-        }
-      ],
-      "rag": {
-        "query": "demand_signal Spring confectionery prior resolution",
-        "intent": "demand_signal · illustrative retrieval",
-        "filters": [
-          "entity: VELORA",
-          "dataset: synthetic history"
-        ],
-        "stats": {
-          "total": 27,
-          "filtered": 9,
-          "topK": 5,
-          "reranked": 3
-        },
-        "latency": "Illustrative search",
-        "chunks": [
-          {
-            "source": "Synthetic incident history",
-            "id": "DEMO-VL-03-H",
-            "sim": 0.91,
-            "preview": "Comparable seasonal promotion: historical uplift of 18–24%. No corrective action; monitored through event window. Forecast returned to baseline after the event ended.",
-            "tags": [
-              "VELORA",
-              "fictional history"
-            ],
-            "date": "2026-02-09"
-          },
-          {
-            "source": "Synthetic readiness record",
-            "id": "DEMO-VL-03-R",
-            "sim": 0.84,
-            "preview": "Event-group sample completeness: 1.00; no feed validation failures. Synthetic calendar window: 2026-04-27 to 2026-05-03.",
-            "tags": [
-              "VELORA",
-              "demand_signal"
-            ],
-            "date": "2026-04-24"
-          },
-          {
-            "source": "Synthetic review precedent",
-            "id": "DEMO-VL-03-P",
-            "sim": 0.79,
-            "preview": "No corrective action or approval required. Monitor forecast and actual demand through 3 May 2026; escalate only if actual demand materially diverges from the expected promotional range.",
-            "tags": [
-              "VELORA",
-              "human oversight"
-            ],
-            "date": "2026-03-16"
-          }
-        ]
-      },
       "eval": {
         "overall": 92,
-        "dims": [
-          {
-            "name": "Diagnostic faithfulness",
-            "val": 0.92,
-            "cls": "pass"
-          },
-          {
-            "name": "Layer sequence compliance",
-            "val": 1,
-            "cls": "pass"
-          },
-          {
-            "name": "Tier classification accuracy",
-            "val": 0.94,
-            "cls": "pass"
-          }
-        ],
-        "verdict": "Calendar and historical evidence support the increase. Monitoring is appropriate; no corrective action or approval is required.",
-        "improvement": "Review actual demand against the expected promotional range and confirm return to baseline after 3 May 2026.",
-        "extraMetrics": [
-          {
-            "label": "Evidence coverage",
-            "val": "3 / 3",
-            "cls": "mv-green",
-            "sub": "Retrieved records used"
-          },
-          {
-            "label": "Approval boundary",
-            "val": "No approval required",
-            "cls": "mv-blue",
-            "sub": "Monitor expected event"
-          },
-          {
-            "label": "Retrieval similarity",
-            "val": "0.85 avg",
-            "cls": "mv-green",
-            "sub": "Average relevance score"
-          }
+        "checks": [
+          true,
+          true,
+          true
         ]
       },
       "planner": {
@@ -732,7 +274,8 @@
         "approval": "No approval required. Monitoring review point: 3 May 2026.",
         "risk": "Low"
       },
-      "monitoring": true
+      "monitoring": true,
+      "precedentSummary": "Comparable seasonal promotion: historical uplift of 18–24%. No corrective action; monitored through event window. Forecast returned to baseline after the event ended."
     }
   ]
 }

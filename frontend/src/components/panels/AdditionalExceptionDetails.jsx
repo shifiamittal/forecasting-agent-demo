@@ -1,3 +1,4 @@
+import QualityChecks from './QualityChecks'
 import { useState } from 'react'
 
 function SectionTitle({ number, children }) {
@@ -7,7 +8,7 @@ function Facts({ items, className }) {
   return <dl className={className}>{items.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
 }
 
-export default function AdditionalExceptionDetails({ data, exception, queue, header, onPrecedent }) {
+export default function AdditionalExceptionDetails({ data, exception, queue, header }) {
   const [decision, setDecision] = useState('')
   const [escalation, setEscalation] = useState(false)
   return <article className="exception-page">
@@ -70,7 +71,7 @@ export default function AdditionalExceptionDetails({ data, exception, queue, hea
     </section>
     <section className="ed-section">
       <SectionTitle number="5">Historical precedent</SectionTitle><p>The agent retrieved a similar past incident to inform this recommendation.</p>
-      <Facts className="ed-precedent" items={data.precedent}/><button className="ed-secondary" onClick={onPrecedent}>View full precedent →</button>
+      <Facts className="ed-precedent" items={data.precedent}/>
     </section>
-  </article>
+  <QualityChecks evaluation={exception.eval} monitoring={data.monitoring}/></article>
 }

@@ -8,3 +8,4 @@
 @media(max-width:700px){.ed-facts,.ed-metrics,.ed-retrain-facts{grid-template-columns:1fr 1fr}.ed-header>div{flex-wrap:wrap}.ed-issue,.ed-section{padding:16px}.ed-header h1{font-size:26px}.ed-chart svg{height:auto}}
 
 .ed-supporting-label{background:#e5edfc;color:#304f83}.ed-parallel-label{background:#eee6fa;color:#69499b}
+.ed-quality{background:#f8fafc;box-shadow:none;padding:16px 22px}.ed-quality h2{font-size:15px;margin-bottom:8px}.ed-quality>p{font-size:12px;color:#526681}.ed-quality ul{display:flex;flex-wrap:wrap;gap:8px 24px;list-style:none;padding:0;margin:10px 0}.ed-quality li{font-size:12px;margin:0}.ed-quality-pass{color:#276347}.ed-quality-review{color:#805800}
