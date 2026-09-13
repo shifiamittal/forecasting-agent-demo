@@ -1,0 +1,89 @@
+{
+  "VELORA": {
+    "updated": "24 Apr 2026",
+    "issues": {
+      "exc-1": {
+        "affectedSkus": 18,
+        "updated": "24 Apr 2026",
+        "action": "Backfill actuals",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 2
+      },
+      "exc-2": {
+        "affectedSkus": 1842,
+        "updated": "24 Apr 2026",
+        "action": "Retrain model",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 1
+      },
+      "exc-3": {
+        "affectedSkus": 124,
+        "updated": "23 Apr 2026",
+        "action": "Temporary adjustment",
+        "status": "Awaiting planner approval",
+        "priority": "Low",
+        "rank": 3
+      }
+    }
+  },
+  "NUVORA": {
+    "updated": "24 Apr 2026",
+    "issues": {
+      "exc-1": {
+        "affectedSkus": 24,
+        "updated": "24 Apr 2026",
+        "action": "Backfill actuals",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 2
+      },
+      "exc-2": {
+        "affectedSkus": 1360,
+        "updated": "24 Apr 2026",
+        "action": "Retrain model",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 1
+      },
+      "exc-3": {
+        "affectedSkus": 96,
+        "updated": "23 Apr 2026",
+        "action": "Temporary adjustment",
+        "status": "Awaiting planner approval",
+        "priority": "Low",
+        "rank": 3
+      }
+    }
+  },
+  "TERRALUNE": {
+    "updated": "24 Apr 2026",
+    "issues": {
+      "exc-1": {
+        "affectedSkus": 32,
+        "updated": "24 Apr 2026",
+        "action": "Backfill actuals",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 2
+      },
+      "exc-2": {
+        "affectedSkus": 2140,
+        "updated": "24 Apr 2026",
+        "action": "Retrain model",
+        "status": "Awaiting DS approval",
+        "priority": "High",
+        "rank": 1
+      },
+      "exc-3": {
+        "affectedSkus": 168,
+        "updated": "23 Apr 2026",
+        "action": "Temporary adjustment",
+        "status": "Awaiting planner approval",
+        "priority": "Low",
+        "rank": 3
+      }
+    }
+  }
+}

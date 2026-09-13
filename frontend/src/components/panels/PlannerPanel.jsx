@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import MetricCard from '../shared/MetricCard'
+import ForecastReviewLanding from './ForecastReviewLanding'
 import Pill from '../shared/Pill'
 import ConfidenceBar from '../shared/ConfidenceBar'
 import ActionItem from '../shared/ActionItem'
@@ -10,34 +10,12 @@ export default function PlannerPanel({ cycleData, selectedExcId, onSelectExc }) 
     if (selectedExcId) detailRef.current?.scrollIntoView({ block: 'start', behavior: 'instant' })
   }, [selectedExcId])
   if (!cycleData?.cycle) return <div className="empty">Choose an entity to review its forecast.</div>
-  const { cycle, exceptions } = cycleData
+  const { exceptions } = cycleData
   const selected = exceptions.find(e => e.id === selectedExcId)
-  const actions = exceptions.flatMap(e => e.actions)
   const p = selected?.planner
 
   return <>
-    <header className="planner-intro">
-      <div><h1>Forecast review</h1><p>{cycle.client_name} · April 2026 forecast cycle</p></div>
-      <span className="planner-note">Prioritized by risk</span>
-    </header>
-    <div className="metrics">
-      <MetricCard label="Exceptions identified" val={exceptions.length} cls="mv-blue" sub="Issues surfaced for this cycle" />
-      <MetricCard label="Autonomous actions completed" val={actions.filter(a => a.tier === 'T1').length} cls="mv-green" sub="Quality flag and event context" />
-      <MetricCard label="Recommendations awaiting approval" val={actions.filter(a => a.tier === 'T2').length} cls="mv-amber" sub="Human decisions needed" />
-      <MetricCard label="Expert escalations" val={actions.filter(a => a.tier === 'T3').length} cls="mv-red" sub="Specialist follow-up required" />
-    </div>
-    <div className="card">
-      <div className="exc-wrap"><table className="exc-table planner-table">
-        <thead><tr><th scope="col">What needs attention</th><th scope="col">Likely cause</th><th scope="col">Risk</th><th scope="col">Next step</th></tr></thead>
-        <tbody>{exceptions.map(e => <tr key={e.id} className={selectedExcId === e.id ? 'selected' : ''} onClick={() => onSelectExc(selectedExcId === e.id ? null : e.id)}>
-          <td><strong className="issue-label">{e.planner.issue}</strong></td>
-          <td>{e.planner.cause}</td>
-          <td><Pill cls={e.planner.risk === 'High' ? 'p-red' : 'p-green'}>{e.planner.risk}</Pill></td>
-          <td><button className="review-cta" aria-expanded={selectedExcId === e.id} aria-controls="planner-detail" onClick={event => {event.stopPropagation(); onSelectExc(selectedExcId === e.id ? null : e.id)}}>{e.planner.nextAction} <span aria-hidden="true">→</span></button><span className="review-state">Human review required</span></td>
-        </tr>)}</tbody>
-      </table></div>
-    </div>
-    {!selected && <p className="planner-hint">Choose an issue above. Evidence, diagnosis and approval needs are all here in Planner view.</p>}
+    <ForecastReviewLanding key={cycleData.cycle.client_id} cycleData={cycleData} selectedExcId={selectedExcId} onSelectExc={id => { onSelectExc(id); if (id && id === selectedExcId) detailRef.current?.scrollIntoView({ block: 'start', behavior: 'instant' }) }} />
     {selected && <section key={selected.id} id="planner-detail" className="planner-detail" ref={detailRef} aria-label="Exception review">
       <div className="detail-heading"><div><span className="section-label">Issue</span><h2>{p.issue}</h2><p>{p.impact}</p></div><Pill cls={p.risk === 'High' ? 'p-red' : 'p-green'}>{p.risk} risk</Pill></div>
       <div className="decision-grid">
